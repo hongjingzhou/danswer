@@ -467,23 +467,21 @@ class GoogleDriveConnector(LoadConnector, PollConnector):
             for file in files_batch:
                 try:
                     text_contents = extract_text(file, service)
-                    if text_contents:
-                        full_context = file["name"] + " - " + text_contents
-                    else:
-                        full_context = file["name"]
+                    if not text_contents:
+                        continue
 
                     doc_batch.append(
                         Document(
                             id=file["webViewLink"],
                             sections=[
-                                Section(link=file["webViewLink"], text=full_context)
+                                Section(link=file["webViewLink"], text=text_contents)
                             ],
                             source=DocumentSource.GOOGLE_DRIVE,
                             semantic_identifier=file["name"],
                             doc_updated_at=datetime.fromisoformat(
                                 file["modifiedTime"]
                             ).astimezone(timezone.utc),
-                            metadata={} if text_contents else {IGNORE_FOR_QA: True},
+                            metadata=file,
                         )
                     )
                 except Exception as e:
