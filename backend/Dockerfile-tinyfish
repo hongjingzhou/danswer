@@ -1,0 +1,18 @@
+# cd to directory: ./danswer/backend/ then run:
+# docker build -f tinyfish/Dockerfile -t tinyfish-rag-danswer-connector .
+FROM python:3.11.4-slim-bookworm
+
+RUN mkdir /app
+WORKDIR /app
+
+COPY ./danswer /app/danswer/
+COPY ./tinyfish /app/tinyfish/
+
+RUN pip install -r /app/tinyfish/requirements.txt
+RUN pip uninstall -y py
+RUN playwright install chromium
+RUN playwright install-deps chromium
+
+
+ENV PYTHONPATH /app
+CMD uvicorn tinyfish.server:app --host 0.0.0.0 --port 8080

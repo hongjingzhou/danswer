@@ -1,0 +1,27 @@
+uvicorn==0.21.1
+pydantic==1.10.7
+fastapi==0.103.0
+fastapi-users==11.0.0
+fastapi-users-db-sqlalchemy==5.0.0
+requests==2.31.0
+beautifulsoup4==4.12.2
+atlassian-python-api==3.37.0
+python-dateutil==2.8.2
+jira==3.5.1
+retry==0.9.2  # This pulls in py which is in CVE-2022-42969, must remove py from image
+chardet==5.2.0
+pypdf==3.17.0
+PyGithub==1.58.2
+docx2txt==0.8
+google-api-python-client==2.86.0
+google-auth-oauthlib==1.0.0
+SQLAlchemy==2.0.15
+filelock==3.12.0
+hubspot-api-client==8.1.0
+# need to pin `safetensors` version, since the latest versions requires
+# building from source using Rust
+rt==3.1.2
+slack-sdk==3.20.2
+playwright==1.37.0
+zenpy==2.0.41
+zulip==0.8.2
